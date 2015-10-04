@@ -47,7 +47,7 @@ foreach my $node (keys %{$json_text->{nodes}})
     if ( $role eq $role_filter && $ip ne "" )
     {
         print "object Host \"$hostname\" \{\n";
-        print $ind."import \"generic host\"\n";
+        print $ind."import \"generic-host\"\n";
         print $ind."address6 = \"$ip\"\n";
         print $ind."vars.os = \"gluon\"\n";
         print $ind."vars.notification\[\"mail\"\] = \{\n";
