@@ -1,0 +1,58 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use JSON::Parse 'parse_json';
+use Data::Dumper;
+
+# Filter for field role
+my $role_filter = "node";
+
+# Filter for ipv6 address
+my $ipv6_filter = "fda0";
+
+# Define indent for output file
+my $ind="    ";
+
+# Read JSON data from STDIN
+my $content = <>;
+
+# Parse JSON data
+my $json_text = parse_json ( $content );
+#print Dumper($json_text);
+
+# Loop over nodes
+foreach my $node (keys %{$json_text->{nodes}})
+{
+    # hostname
+    my $hostname = $json_text->{nodes}->{$node}->{nodeinfo}->{hostname};
+    # Initialize array for ipv6 addresses, usually link local fe80:
+    # and ff fda0 (the latter we want for the output file):
+    my @ips = ();
+    # Initialize empty variable for ip address
+    my $ip = "";
+    # Retrieve the ip address information from JSON, if available
+    if (defined $json_text->{nodes}->{$node}->{nodeinfo}->{network}->{addresses})
+    {
+        @ips = @{$json_text->{nodes}->{$node}->{nodeinfo}->{network}->{addresses}};
+        # Search for the fda0 address and put it in varaible $ip
+        foreach my $i (0..$#ips)
+        {
+            $ip = @ips[$i] if @ips[$i] =~ m/^$ipv6_filter/;
+        }
+    }
+    # role
+    my $role = $json_text->{nodes}->{$node}->{nodeinfo}->{system}->{role} || "";
+
+    if ( $role eq $role_filter && $ip ne "" )
+    {
+        print "object Host \"$hostname\" \{\n";
+        print $ind."import \"generic host\"\n";
+        print $ind."address6 = \"$ip\"\n";
+        print $ind."vars.os = \"gluon\"\n";
+        print $ind."vars.notification\[\"mail\"\] = \{\n";
+        print $ind.$ind."groups = \[\"icingaadmins\"\]\n";
+        print $ind."\}\n";
+        print "\}\n";
+    }
+} 
