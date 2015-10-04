@@ -6,7 +6,7 @@ use JSON::Parse 'parse_json';
 use Data::Dumper;
 
 # Filter for field role
-my $role_filter = "node";
+my $role_filter = "uplink";
 
 # Filter for ipv6 address
 my $ipv6_filter = "fda0";
