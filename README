@@ -1,0 +1,16 @@
+Perl Dependencies:
+------------------
+
+Install the following Perl modules (e.g. via cpan):
+  JSON::Parser
+  Data::Dumper (recommended)
+
+Usage:
+------
+
+Fetch JSON from WWW:
+  curl -k https://map.freifunk-troisdorf.de/nodes.json | ./nodes2monconf
+
+Read local copy of JSON:
+  cat nodes.json | ./nodes2monconf
+
