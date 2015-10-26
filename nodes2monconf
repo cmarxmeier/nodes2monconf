@@ -53,7 +53,7 @@ foreach my $node (keys %{$json_text->{nodes}})
         print $ind."vars.notification\[\"mailnodes\"\] = \{\n";
         print $ind.$ind."groups = \[\"icingaadmins\"\]\n";
         print $ind."\}\n";
-        print "\}\n";
         print "vars.backup_downtime = 1\n";
+        print "\}\n";
     }
 } 
