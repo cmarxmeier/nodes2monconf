@@ -50,9 +50,6 @@ foreach my $node (keys %{$json_text->{nodes}})
         print $ind."import \"generic-host\"\n";
         print $ind."address6 = \"$ip\"\n";
         print $ind."vars.os = \"gluon\"\n";
-        print $ind."vars.notification\[\"mailnodes\"\] = \{\n";
-        print $ind.$ind."groups = \[\"icingaadmins\"\]\n";
-        print $ind."\}\n";
         print "vars.backup_downtime = 1\n";
         print "\}\n";
     }
