@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+# data source: http://map.freifunk-rhein-sieg.de/data/nodes.json
+
 use strict;
 use warnings;
 use JSON::Parse 'parse_json';
